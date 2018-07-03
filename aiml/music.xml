@@ -1,0 +1,78 @@
+<aiml version = "1.0.1" encoding = "UTF-8">
+  <category>
+     <pattern>PAUSE</pattern>
+     <template>
+        PAUSING MUSIC
+     </template>
+  </category>
+  
+  <category>
+    <pattern>RESUME</pattern>
+    <template>
+      PLAYING MUSIC
+    </template>
+  </category>
+
+  <category>
+    <pattern>PLAY</pattern>
+    <template>
+      <srai>RESUME</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>NEXT</pattern>
+    <template>
+      PLAYING NEXT SONG
+    </template>
+  </category>
+
+  <category>
+    <pattern>SKIP</pattern>
+    <template>
+      <srai>NEXT</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>NEXT SONG</pattern>
+    <template>
+      <srai>NEXT</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>PLAY NEXT SONG</pattern>
+    <template>
+      <srai>NEXT</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>PREVIOUS</pattern>
+    <template>
+      PLAYING PREVIOUS SONG
+    </template>
+  </category>
+
+  <category>
+    <pattern>PLAY PREVIOUS</pattern>
+    <template>
+      <srai>PREVIOUS</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>PLAY PREVIOUS SONG</pattern>
+    <template>
+      <srai>PREVIOUS</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>PREVIOUS SONG</pattern>
+    <template>
+      <srai>PREVIOUS</srai>
+    </template>
+  </category>
+</aiml>
