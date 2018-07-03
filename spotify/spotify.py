@@ -88,6 +88,10 @@ class Spotify:
         else:
             raise ValueError("No Spotify results for this search query.")
 
+    @need_auth
+    def play_song(self, uri):
+        pass
+
     def route_command(self, command):
         """Executes and generates  a string response for a given spotify
             command.
@@ -116,7 +120,7 @@ class Spotify:
                 self.search_and_play(query)
                 # Need to sleep very quickly for the currently playing data
                 # to updat
-                sleep(0.1)
+                sleep(0.2)
                 track_info = self._spotify.currently_playing()['item']
                 return "Playing {} by {}".format(
                     track_info['name'],
@@ -124,6 +128,9 @@ class Spotify:
                 )
             except ValueError:
                 return "No search results for that query on Spotify"
+            except TypeError:
+                return "An error occurred while searching for that query on \
+Spotify"
         elif label == "current":
             if self.auth:
                 track_info = self._spotify.currently_playing()['item']

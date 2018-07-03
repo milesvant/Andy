@@ -69,6 +69,8 @@ class Andy:
                 self.say("No music currently selected.")
         elif label == "weather":
             self.say(self.weather.route_command(command))
+        elif label == "":
+            self.say("")
         else:
             self.say("Cannot understand command")
 

@@ -9,6 +9,7 @@ class Andy_Helper:
             "music": ["play", "pause", "spotify", "music", "skip", "next",
                       "song", "playing", ],
             "weather": ["weather", ],
+            "": [""],
         }
 
     def classify_command(self, command):
