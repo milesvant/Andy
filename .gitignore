@@ -3,3 +3,4 @@
 *.json
 .cache-*
 __pycache__/
+*test.py

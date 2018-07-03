@@ -2,17 +2,30 @@ import spotipy
 import spotipy.util as util
 import os
 import yaml
+from time import sleep
+from .spotify_helper import Spotify_Helper
 
 
 class Spotify:
-    """
+    """Wrapper around a spotipy.Spotify object which can log in a user as well
+        as translate and execute user commands.
+
+        Attributes:
+            _spotify: a spotipy.Spotify object
+            helper: a Spotify_Helper object which helps process user commands
+            auth: True if a user is logged in, and False otherwise
     """
 
     def __init__(self):
         self._spotify = spotipy.Spotify()
+        self.helper = Spotify_Helper()
         self.auth = False
 
-    def login(self, username, scope="user-modify-playback-state"):
+    def login(self, username):
+        """Logs in username to Spotify."""
+        scope = "user-modify-playback-state \
+        user-read-currently-playing \
+        user-read-playback-state"
         CREDENTIALS_FILE = "{}/spotify-credentials.yaml".format(
             os.path.abspath(os.path.dirname(__file__))
         )
@@ -38,9 +51,9 @@ class Spotify:
             raise ValueError("Could not connect to Spotify at this time.")
 
     def need_auth(fun):
-        def wrapped_fun(self):
+        def wrapped_fun(self, *args, **kwargs):
             if self.auth:
-                fun(self)
+                fun(self, *args, **kwargs)
             else:
                 raise ValueError("Not logged in to Spotify.")
         return wrapped_fun
@@ -61,25 +74,64 @@ class Spotify:
     def previous_playback(self):
         self._spotify.previous_track()
 
-    def route_command(self, command):
-        if command == "resume spotify" \
-                or command == "play spotify" \
-                or command == "resume" \
-                or command == "play":
-            self.resume_playback()
-        elif command == "pause spotify" \
-                or command == "stop spotify" \
-                or command == "pause":
-            self.pause_playback()
-        elif command == "play previous" \
-                or command == "previous" \
-                or command == "play previous song" \
-                or command == "previous song":
-            self.previous_playback()
-        elif command == "skip" \
-                or command == "next" \
-                or command == "next song" \
-                or command == "play next song":
-            self.next_playback()
+    @need_auth
+    def search_and_play(self, query):
+        """Searches for a query on Spotify and plays the top result, with the
+            remaining search results queued up next."""
+        results = []
+        for result in self._spotify.search(query,
+                                           type="track",
+                                           limit=10)['tracks']['items']:
+            results.append(result['uri'])
+        if results is not []:
+            self._spotify.start_playback(uris=results)
         else:
-            pass
+            raise ValueError("No Spotify results for this search query.")
+
+    def route_command(self, command):
+        """Executes and generates  a string response for a given spotify
+            command.
+
+            Args:
+                command: a string command which requests some action or
+                    information related to Spotify.
+            Returns:
+                A string response to the command.
+        """
+        label, query = self.helper.parse_command(command)
+        if label == "resume":
+            self.resume_playback()
+            return "Resuming spotify"
+        elif label == "pause":
+            self.pause_playback()
+            return "Pausing spotify"
+        elif label == "previous":
+            self.previous_playback()
+            return "Playing previous song"
+        elif label == "next":
+            self.next_playback()
+            return "Playing next song"
+        elif label == "search":
+            try:
+                self.search_and_play(query)
+                # Need to sleep very quickly for the currently playing data
+                # to updat
+                sleep(0.1)
+                track_info = self._spotify.currently_playing()['item']
+                return "Playing {} by {}".format(
+                    track_info['name'],
+                    track_info['artists'][0]['name']
+                )
+            except ValueError:
+                return "No search results for that query on Spotify"
+        elif label == "current":
+            if self.auth:
+                track_info = self._spotify.currently_playing()['item']
+                return "The currently playing song is {} by {}".format(
+                    track_info['name'],
+                    track_info['artists'][0]['name']
+                )
+            else:
+                return "Not logged into Spotify"
+        else:
+            return "Cannot understand command"
