@@ -7,6 +7,10 @@ import sys
 import spotipy
 import pyowm
 import googleapiclient
+import pyaudio
+from google.cloud import speech
+from google.cloud.speech import enums
+from google.cloud.speech import types
 from spotify.spotify import Spotify
 from weather.weather import Weather
 from andy_calendar.andy_calendar import Calendar
@@ -20,25 +24,31 @@ class Andy:
        Attributes:
             spotify: A Spotify object, executes and responds to Spotify
                 commands
-            weather: A weather object, executes and responds to Weather
+            weather: A Weather object, executes and responds to Weather
+                commands
+            calendar: A Calendar object, executes and responds to Calendar
                 commands
             helper: A helper which chooses which module to send commands to
             kernel: An AIML kernel which responds to some messages to Andy
-            spoken: True if Andy should use text to speech, and False if
+            user_spoken: True if Andy should listen to commands through the
+                microphone, and False if the command line should be used
+            andy_spoken: True if Andy should use text to speech, and False if
                 print statements should be used
             current_music: If music is currently being played or used, then
                 current_music is equal to corresponding music module object in
                 Andy's attributes
        """
 
-    def __init__(self, default_music=None, spoken=False):
+    def __init__(self, default_music=None,
+                 user_spoken=False, andy_spoken=False):
         self.spotify = Spotify()
         self.weather = Weather()
         self.calendar = Calendar()
         self.helper = Andy_Helper()
         self.kernel = aiml.Kernel()
         self.load_aiml()
-        self.spoken = spoken
+        self.user_spoken = user_spoken
+        self.andy_spoken = andy_spoken
         if default_music is None:
             self.current_music = None
         else:
@@ -53,7 +63,7 @@ class Andy:
 
     def prompt(self):
         """Prompts the user for input to Andy"""
-        if self.spoken:
+        if self.user_spoken:
             pass
         else:
             user_input = input("> ")
@@ -85,9 +95,9 @@ class Andy:
             self.say("Cannot understand command")
 
     def say(self, text):
-        """'Says' given text, either through printing it or using
+        """Says given text, either through printing it or using
             speech-to-text."""
-        if self.spoken:
+        if self.andy_spoken:
             pass
         else:
             print(text)

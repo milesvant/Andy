@@ -105,10 +105,10 @@ class Spotify:
         label, query = self.helper.parse_command(command)
         if label == "resume":
             self.resume_playback()
-            return "Resuming spotify"
+            return "Resuming Spotify"
         elif label == "pause":
             self.pause_playback()
-            return "Pausing spotify"
+            return "Pausing Spotify"
         elif label == "previous":
             self.previous_playback()
             return "Playing previous song"

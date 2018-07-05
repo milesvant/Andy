@@ -12,7 +12,7 @@ class Calendar_Helper:
 
     def __init__(self):
         self.calendar_re = {
-            "today events": [re.compile('[A-Z|a-z| |\']*(calendar|schedule)[A-Z|a-z| |\']*today\??'), ],
+            "today events": [re.compile('[A-Z|a-z| |\']*(calendar|schedule|events)[A-Z|a-z| |\']*today\??'), ],
         }
 
     def parse_command(self, command):
