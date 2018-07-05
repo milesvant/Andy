@@ -25,9 +25,14 @@ class Spotify_Helper:
     def parse_command(self, command):
         """Transforms a command into a label.
 
+            Args:
+                command: string, command entered by user
+
             Returns:
                 the label of the first regular expression in
-                self.spotify_re which matches command
+                self.spotify_re which matches command, then either None or
+                the query to search for if the command was requesting a search
+                of spotify.
         """
         for label in self.spotify_re:
             for regexp in self.spotify_re[label]:
@@ -40,3 +45,4 @@ class Spotify_Helper:
                         return label, query
                     else:
                         return label, None
+        return None, None

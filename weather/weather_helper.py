@@ -27,6 +27,9 @@ class Weather_Helper:
     def parse_command(self, command):
         """Transforms a command into a label and possibly a location.
 
+            Args:
+                command: string, command entered by user
+
             Returns:
                 a label (if any is matched) which describes what the command is
                 requesting, along with a location if the command is requesting

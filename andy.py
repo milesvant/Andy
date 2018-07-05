@@ -5,8 +5,11 @@ import yaml
 import re
 import sys
 import spotipy
+import pyowm
+import googleapiclient
 from spotify.spotify import Spotify
 from weather.weather import Weather
+from andy_calendar.andy_calendar import Calendar
 from andy_helper import Andy_Helper
 
 
@@ -31,6 +34,7 @@ class Andy:
     def __init__(self, default_music=None, spoken=False):
         self.spotify = Spotify()
         self.weather = Weather()
+        self.calendar = Calendar()
         self.helper = Andy_Helper()
         self.kernel = aiml.Kernel()
         self.load_aiml()
@@ -68,9 +72,15 @@ class Andy:
             else:
                 self.say("No music currently selected.")
         elif label == "weather":
-            self.say(self.weather.route_command(command))
-        elif label == "":
-            self.say("")
+            try:
+                self.say(self.weather.route_command(command))
+            except pyowm.exceptions.api_call_error.APICallError:
+                self.say("An error occurred while connecting to Open Weather Map")
+        elif label == "calendar":
+            try:
+                self.say(self.calendar.route_command(command))
+            except googleapiclient.errors.HttpError:
+                self.say("An error occurred while connecting to Google Calendar")
         else:
             self.say("Cannot understand command")
 
