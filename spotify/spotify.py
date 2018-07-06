@@ -76,12 +76,11 @@ class Spotify:
 
     @need_auth
     def search_and_play(self, query):
-        """Searches for a query on Spotify and plays the top result, with the
-            remaining search results queued up next."""
+        """Searches for a query on Spotify and plays the top result"""
         results = []
         for result in self._spotify.search(query,
                                            type="track",
-                                           limit=10)['tracks']['items']:
+                                           limit=1)['tracks']['items']:
             results.append(result['uri'])
         if results is not []:
             self._spotify.start_playback(uris=results)
@@ -120,7 +119,7 @@ class Spotify:
                 self.search_and_play(query)
                 # Need to sleep very quickly for the currently playing data
                 # to updat
-                sleep(0.2)
+                sleep(0.5)
                 track_info = self._spotify.currently_playing()['item']
                 return "Playing {} by {}".format(
                     track_info['name'],

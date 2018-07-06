@@ -8,12 +8,14 @@ import spotipy
 import pyowm
 import googleapiclient
 import pyaudio
+import pyttsx3
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
 from spotify.spotify import Spotify
 from weather.weather import Weather
 from andy_calendar.andy_calendar import Calendar
+from speech_to_text.speech_to_text import AndySpeechToText
 from andy_helper import Andy_Helper
 
 
@@ -49,6 +51,10 @@ class Andy:
         self.load_aiml()
         self.user_spoken = user_spoken
         self.andy_spoken = andy_spoken
+        if self.user_spoken:
+            self.stt = AndySpeechToText()
+        if self.andy_spoken:
+            self.speech_engine = pyttsx3.init()
         if default_music is None:
             self.current_music = None
         else:
@@ -64,7 +70,8 @@ class Andy:
     def prompt(self):
         """Prompts the user for input to Andy"""
         if self.user_spoken:
-            pass
+            command = self.stt.record_and_convert()
+            self.route_command(command.lower())
         else:
             user_input = input("> ")
             self.route_command(user_input.lower())
@@ -98,7 +105,9 @@ class Andy:
         """Says given text, either through printing it or using
             speech-to-text."""
         if self.andy_spoken:
-            pass
+            self.speech_engine.say(text)
+            self.speech_engine.runAndWait()
+            print(text)
         else:
             print(text)
 
