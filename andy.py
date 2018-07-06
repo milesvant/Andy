@@ -71,6 +71,8 @@ class Andy:
         """Prompts the user for input to Andy"""
         if self.user_spoken:
             command = self.stt.record_and_convert()
+            if command is None:
+                command = ""
             self.route_command(command.lower())
         else:
             user_input = input("> ")
@@ -79,27 +81,39 @@ class Andy:
     def route_command(self, command):
         """Sends a user command to the corresponding module where it will be
             executed."""
-        label = self.helper.classify_command(command)
-        if label == "music":
+        labels = self.helper.classify_command(command)
+        if "music" in labels:
             if self.current_music is not None:
                 try:
-                    self.say(self.current_music.route_command(command))
+                    result = self.current_music.route_command(command)
+                    if result is not None:
+                        self.say(result)
+                        return
                 except spotipy.client.SpotifyException:
                     self.say("Error executing Spotify command")
+                    return
             else:
                 self.say("No music currently selected.")
-        elif label == "weather":
+                return
+        if "weather" in labels:
             try:
-                self.say(self.weather.route_command(command))
+                result = self.weather.route_command(command)
+                if result is not None:
+                    self.say(result)
+                    return
             except pyowm.exceptions.api_call_error.APICallError:
                 self.say("An error occurred while connecting to Open Weather Map")
-        elif label == "calendar":
+                return
+        if "calendar" in labels:
             try:
-                self.say(self.calendar.route_command(command))
+                result = self.calendar.route_command(command)
+                if result is not None:
+                    self.say(result)
+                    return
             except googleapiclient.errors.HttpError:
                 self.say("An error occurred while connecting to Google Calendar")
-        else:
-            self.say("Cannot understand command")
+                return
+        self.say("Cannot understand command")
 
     def say(self, text):
         """Says given text, either through printing it or using

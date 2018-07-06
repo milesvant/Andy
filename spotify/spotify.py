@@ -140,4 +140,4 @@ Spotify"
             else:
                 return "Not logged into Spotify"
         else:
-            return "Cannot understand command"
+            return None

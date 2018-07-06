@@ -13,7 +13,7 @@ class Weather_Helper:
     def __init__(self):
         self.weather_re = {
             "current today": [re.compile('[A-Z|a-z|\'| ]*weather (outside )?(going to be )?today\??'),
-                              re.compile('[A-Z|a-z|\'| ]*weather (outside )?now\??'), ],
+                              re.compile('[A-Z|a-z|\'| ]*weather (outside )?(now|like)\??'), ],
             "current tomorrow": [re.compile('[A-Z|a-z|\'| ]*weather (going to be )?tomorrow\??'), ],
             "external today": [re.compile('[A-Z|a-z|\'| ]*weather (going to be )?today in [A-Z|a-z|\'| ]+?'),
                                re.compile('[A-Z|a-z|\'| ]*weather now in [A-Z|a-z|\'| ]+\??'),

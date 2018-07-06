@@ -83,4 +83,4 @@ class Calendar:
                     response += "\n"
                 return response
         else:
-            return "Cannot understand command"
+            return None

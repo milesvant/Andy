@@ -19,7 +19,7 @@ class Spotify_Helper:
             "previous": [re.compile('[A-Z|a-z| ]*previous( song)?'),
                          re.compile('[A-Z|a-z| ]*song before[A-Z|a-z| ]*'), ],
             "search": [re.compile('[A-Z|a-z| ]*play [A-Z|a-z|\'| |0-9]+( by [A-Z|a-z|\'| |0-9]+)?( on spotify)?'), ],
-            "current": [re.compile('[A-Z|a-z|\'| ]*what[A-Z|a-z|\'| ]+(song)?( playing| playing now)?\??'), ],
+            "current": [re.compile('[A-Z|a-z|\'| ]*what[A-Z|a-z|\'| ]+(song|playing|playing now)\??'), ],
         }
 
     def parse_command(self, command):

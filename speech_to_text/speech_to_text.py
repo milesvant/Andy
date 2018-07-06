@@ -178,5 +178,6 @@ class AndySpeechToText:
         """Packages together the recording and conversion to text methods"""
         filename = self.record_for_andy()
         text = self.convert_to_text(filename)
+        print(text)
         os.remove(filename)
         return text

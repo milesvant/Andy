@@ -191,4 +191,4 @@ class Weather:
             except NotFoundError:
                 return "Please clarify your weather query."
         else:
-            return "Please clarify your weather query."
+            return None

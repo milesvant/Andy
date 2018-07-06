@@ -15,9 +15,9 @@ class Andy_Helper:
     def classify_command(self, command):
         """Translates a command into a label which describes what kind of
             command it is (e.g. music or weather)"""
+        labels = []
         for label in self.command_keywords:
             for keyword in self.command_keywords[label]:
                 if keyword in command:
-                    return label
-        else:
-            return None
+                    labels.append(label)
+        return labels
