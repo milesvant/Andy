@@ -58,7 +58,7 @@ class Calendar:
         events = events_result.get('items', [])
         return events
 
-    def route_command(self, command):
+    def route_command(self, command, say, listen):
         """Executes and generates a string response for a given Calendar
             command.
 
@@ -67,6 +67,8 @@ class Calendar:
                     information related to Google Calendar.
                 say: A function which will say (either through text to speech
                     or printing) a string in the main speaker loop
+                listen: A function which will listen and record user input
+                    through either speech to text or through the CLI
             Returns:
                 True if a command was executed (or failed while executed) and
                     false if the command was invalid.

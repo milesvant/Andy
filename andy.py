@@ -67,6 +67,10 @@ class Andy:
                 os.path.abspath(os.path.dirname(__name__)))):
             self.kernel.learn(file)
 
+    def text_input(self):
+        user_input = input("> ")
+        return user_input
+
     def prompt(self):
         """Prompts the user for input to Andy"""
         if self.user_spoken:
@@ -75,18 +79,26 @@ class Andy:
                 command = ""
             self.route_command(command.lower())
         else:
-            user_input = input("> ")
-            self.route_command(user_input.lower())
+            command = self.text_input()
+            self.route_command(command.lower())
 
     def route_command(self, command):
         """Sends a user command to the corresponding module where it will be
             executed."""
         labels = self.helper.classify_command(command)
+        # set the function that will record user input for the other modules
+        if self.user_spoken:
+            listen = self.stt.record_and_convert
+        else:
+            listen = self.text_input
         if "music" in labels:
             if self.current_music is not None:
                 try:
-                    result = self.current_music.route_command(command,
-                                                              self.say)
+                    result = self.current_music.route_command(
+                        command,
+                        self.say,
+                        listen
+                    )
                     if result:
                         return
                 except spotipy.client.SpotifyException:
@@ -97,7 +109,11 @@ class Andy:
                 return
         if "weather" in labels:
             try:
-                result = self.weather.route_command(command, self.say)
+                result = self.weather.route_command(
+                    command,
+                    self.say,
+                    listen
+                )
                 if result:
                     return
             except pyowm.exceptions.api_call_error.APICallError:
@@ -106,7 +122,11 @@ class Andy:
                 return
         if "calendar" in labels:
             try:
-                result = self.calendar.route_command(command, self.say)
+                result = self.calendar.route_command(
+                    command,
+                    self.say,
+                    listen
+                )
                 if result:
                     return
             except googleapiclient.errors.HttpError:

@@ -110,7 +110,7 @@ class Weather:
         else:
             return None
 
-    def route_command(self, command):
+    def route_command(self, command, say, listen):
         """Generates a string response for a given weather command.
 
             Args:
@@ -118,6 +118,8 @@ class Weather:
                     the weather.
                 say: A function which will say (either through text to speech
                     or printing) a string in the main speaker loop
+                listen: A function which will listen and record user input
+                    through either speech to text or through the CLI
             Returns:
                 True if a command was executed (or failed while executed) and
                     false if the command was invalid.

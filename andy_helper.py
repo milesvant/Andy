@@ -7,7 +7,8 @@ class Andy_Helper:
     def __init__(self):
         self.command_keywords = {
             "music": ["play", "pause", "spotify", "music", "skip", "next",
-                      "song", "playing", ],
+                      "song", "playing", "playlist", "previous", "volume",
+                      "quiet", "loud", ],
             "weather": ["weather", ],
             "calendar": ["calendar", "schedule", "events", ],
         }
