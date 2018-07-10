@@ -85,9 +85,9 @@ class Andy:
         if "music" in labels:
             if self.current_music is not None:
                 try:
-                    result = self.current_music.route_command(command)
-                    if result is not None:
-                        self.say(result)
+                    result = self.current_music.route_command(command,
+                                                              self.say)
+                    if result:
                         return
                 except spotipy.client.SpotifyException:
                     self.say("Error executing Spotify command")
@@ -97,21 +97,21 @@ class Andy:
                 return
         if "weather" in labels:
             try:
-                result = self.weather.route_command(command)
-                if result is not None:
-                    self.say(result)
+                result = self.weather.route_command(command, self.say)
+                if result:
                     return
             except pyowm.exceptions.api_call_error.APICallError:
-                self.say("An error occurred while connecting to Open Weather Map")
+                self.say("An error occurred while connecting to Open Weather \
+                Map")
                 return
         if "calendar" in labels:
             try:
-                result = self.calendar.route_command(command)
-                if result is not None:
-                    self.say(result)
+                result = self.calendar.route_command(command, self.say)
+                if result:
                     return
             except googleapiclient.errors.HttpError:
-                self.say("An error occurred while connecting to Google Calendar")
+                self.say("An error occurred while connecting to Google \
+                Calendar")
                 return
         self.say("Cannot understand command")
 

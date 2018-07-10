@@ -65,14 +65,17 @@ class Calendar:
             Args:
                 command: a string command which requests some action or
                     information related to Google Calendar.
+                say: A function which will say (either through text to speech
+                    or printing) a string in the main speaker loop
             Returns:
-                A string response to the command.
+                True if a command was executed (or failed while executed) and
+                    false if the command was invalid.
         """
         label, args = self.helper.parse_command(command)
         if label == "today events":
             events = self.get_today_events()
             if not events:
-                return "No upcoming events found."
+                say("No upcoming events found.")
             else:
                 response = ""
                 for event in events:
@@ -81,6 +84,7 @@ class Calendar:
                     response += start + ": "
                     response += event['summary']
                     response += "\n"
-                return response
+                say(response)
         else:
-            return None
+            return False
+        return True

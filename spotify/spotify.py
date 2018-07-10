@@ -91,45 +91,48 @@ class Spotify:
     def play_song(self, uri):
         pass
 
-    def route_command(self, command):
+    def route_command(self, command, say):
         """Executes and generates  a string response for a given spotify
             command.
 
             Args:
                 command: a string command which requests some action or
                     information related to Spotify.
+                say: A function which will say (either through text to speech
+                    or printing) a string in the main speaker loop
             Returns:
-                A string response to the command.
+                True if a command was executed (or failed while executed) and
+                    false if the command was invalid.
         """
         label, query = self.helper.parse_command(command)
         if label == "resume":
+            say("Resuming Spotify")
             self.resume_playback()
-            return "Resuming Spotify"
         elif label == "pause":
+            say("Pausing Spotify")
             self.pause_playback()
-            return "Pausing Spotify"
         elif label == "previous":
+            say("Playing previous song")
             self.previous_playback()
-            return "Playing previous song"
         elif label == "next":
+            say("Playing next song")
             self.next_playback()
-            return "Playing next song"
         elif label == "search":
             try:
                 self.search_and_play(query)
-                # Need to sleep very quickly for the currently playing data
-                # to updat
+                # Need to sleep for a moment for the currently playing data
+                # to update
                 sleep(0.5)
                 track_info = self._spotify.currently_playing()['item']
-                return "Playing {} by {}".format(
+                say("Playing {} by {}".format(
                     track_info['name'],
                     track_info['artists'][0]['name']
-                )
+                ))
             except ValueError:
-                return "No search results for that query on Spotify"
+                say("No search results for that query on Spotify")
             except TypeError:
-                return "An error occurred while searching for that query on \
-Spotify"
+                say("An error occurred while searching for that query on \
+Spotify")
         elif label == "current":
             if self.auth:
                 track_info = self._spotify.currently_playing()['item']
@@ -138,6 +141,7 @@ Spotify"
                     track_info['artists'][0]['name']
                 )
             else:
-                return "Not logged into Spotify"
+                say("Not logged into Spotify")
         else:
-            return None
+            return False
+        return True
