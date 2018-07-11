@@ -30,11 +30,11 @@ class SpotifyHelper(ModuleHelper):
              re.compile('[A-Z|a-z|\'| ]*(list|what)[A-Z|a-z|\'| ]*playlist(s)?[A-Z|a-z|\'| ]*')]),
             ("volume up", [
              re.compile('[A-Z|a-z|\'| ]*(volume|sound|song) up[A-Z|a-z|\'| ]*'),
-             re.compile('[A-Z|a-z|\'| ]*quieter[A-Z|a-z|\'| ]*'),
+             re.compile('[A-Z|a-z|\'| ]*loud(er)?[A-Z|a-z|\'| ]*'),
              ]),
             ("volume down", [
                 re.compile('[A-Z|a-z|\'| ]*(volume|sound|song) down[A-Z|a-z|\'| ]*'),
-                re.compile('[A-Z|a-z|\'| ]*louder[A-Z|a-z|\'| ]*'),
+                re.compile('[A-Z|a-z|\'| ]*quiet(er)?[A-Z|a-z|\'| ]*'),
             ]),
         ]
         self.spotify_re = OrderedDict(self.spotify_re)
