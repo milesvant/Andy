@@ -1,7 +1,8 @@
 import re
+from ..module_helper import ModuleHelper
 
 
-class Weather_Helper:
+class WeatherHelper(ModuleHelper):
     """A class which parses and interprets commands to a Weather object.
 
         Attributes:
@@ -11,6 +12,7 @@ class Weather_Helper:
     """
 
     def __init__(self):
+        ModuleHelper.__init__(self)
         self.weather_re = {
             "current today": [re.compile('[A-Z|a-z|\'| ]*weather (outside )?(going to be )?today\??'),
                               re.compile('[A-Z|a-z|\'| ]*weather (outside )?(now|like)\??'), ],

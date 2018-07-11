@@ -3,7 +3,7 @@ import spotipy.util as util
 import os
 import yaml
 from time import sleep
-from .spotify_helper import Spotify_Helper
+from .spotify_helper import SpotifyHelper
 
 
 class Spotify:
@@ -18,7 +18,7 @@ class Spotify:
 
     def __init__(self):
         self._spotify = spotipy.Spotify()
-        self.helper = Spotify_Helper()
+        self.helper = SpotifyHelper()
         self.auth = False
 
     def login(self, username):
