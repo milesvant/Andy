@@ -2,7 +2,7 @@ from pyowm import OWM
 from pyowm.exceptions.not_found_error import NotFoundError
 from urllib.request import urlopen
 from urllib.error import HTTPError
-from .weather_helper import Weather_Helper
+from .weather_helper import WeatherHelper
 from datetime import datetime, timedelta
 import requests
 import os
@@ -37,7 +37,7 @@ class Weather:
             self.ipstack_api_key = os.environ.get('IPSTACK_API_KEY')
         self._OWM = OWM(owm_api_key)
         self.current_location = self.get_current_location()
-        self.helper = Weather_Helper()
+        self.helper = WeatherHelper()
 
     def get_ip_address(self):
         """Returns a string of the current (public) IP address."""

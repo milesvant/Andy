@@ -12,10 +12,10 @@ import pyttsx3
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
-from spotify.spotify import Spotify
-from weather.weather import Weather
-from andy_calendar.andy_calendar import Calendar
-from speech_to_text.speech_to_text import AndySpeechToText
+from modules.spotify.spotify import Spotify
+from modules.weather.weather import Weather
+from modules.andy_calendar.andy_calendar import Calendar
+from modules.speech_to_text.speech_to_text import AndySpeechToText
 from andy_helper import Andy_Helper
 
 

@@ -4,7 +4,7 @@ from dateutil import tz
 from googleapiclient import discovery
 from httplib2 import Http
 from oauth2client import file, client, tools
-from .calendar_helper import Calendar_Helper
+from .calendar_helper import CalendarHelper
 
 
 class Calendar:
@@ -17,7 +17,7 @@ class Calendar:
     """
 
     def __init__(self):
-        self.helper = Calendar_Helper()
+        self.helper = CalendarHelper()
         self.calendar = self.authorize()
 
     def authorize(self):

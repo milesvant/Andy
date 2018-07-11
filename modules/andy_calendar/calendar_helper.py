@@ -1,7 +1,8 @@
 import re
+from ..module_helper import ModuleHelper
 
 
-class Calendar_Helper:
+class CalendarHelper(ModuleHelper):
     """A class which parses and interprets commands to a Calendar object.
 
         Attributes:
@@ -11,6 +12,7 @@ class Calendar_Helper:
     """
 
     def __init__(self):
+        ModuleHelper.__init__(self)
         self.calendar_re = {
             "today events": [re.compile('[A-Z|a-z| |\']*(calendar|schedule|events)[A-Z|a-z| |\']*today\??'), ],
         }
