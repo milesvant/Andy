@@ -81,11 +81,14 @@ class Calendar:
             else:
                 response = ""
                 for event in events:
-                    start = event['start'].get('dateTime',
-                                               event['start'].get('date'))
-                    response += start + ": "
-                    response += event['summary']
-                    response += "\n"
+                    start = self.helper.get_time(event['start'].get(
+                        'dateTime',
+                        event['start'].get('date')))
+                    end = self.helper.get_time(event['end'].get(
+                        'dateTime',
+                        event['end'].get('date')))
+                    response += "From " + start + " to " + end + " - "
+                    response += event['summary'] + "\n"
                 say(response)
         else:
             return False

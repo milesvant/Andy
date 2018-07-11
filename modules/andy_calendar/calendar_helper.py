@@ -34,3 +34,18 @@ class CalendarHelper(ModuleHelper):
                 if regexp.fullmatch(command):
                     return label, None
         return None, None
+
+    def get_time(self, time_string):
+        """Removes dates and military time from strings returned by the Google
+            Calendar API.
+
+            Example:
+                2018-07-11T16:30:00-04:00 -> 4:30 PM
+        """
+        after_t = time_string.split('T')[1]
+        time = after_t[0:5]
+        if int(time[0:2]) > 12:
+            time = str(int(time[0:2]) - 12) + time[2:5] + " PM"
+        else:
+            time += " AM"
+        return time
