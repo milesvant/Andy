@@ -12,9 +12,11 @@ import pyttsx3
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
+from twilio.base.exceptions import TwilioException
 from modules.spotify.spotify import Spotify
 from modules.weather.weather import Weather
 from modules.andy_calendar.andy_calendar import Calendar
+from modules.sms.sms import SMS
 from modules.speech_to_text.speech_to_text import AndySpeechToText
 from andy_helper import Andy_Helper
 
@@ -41,16 +43,18 @@ class Andy:
                 Andy's attributes
        """
 
-    def __init__(self, default_music=None,
+    def __init__(self, sms_name, default_music=None,
                  user_spoken=False, andy_spoken=False):
         self.spotify = Spotify()
         self.weather = Weather()
         self.calendar = Calendar()
+        self.sms = SMS(sms_name)
         self.helper = Andy_Helper()
         self.kernel = aiml.Kernel()
         self.load_aiml()
         self.user_spoken = user_spoken
         self.andy_spoken = andy_spoken
+        self.sms_name = sms_name
         if self.user_spoken:
             self.stt = AndySpeechToText()
         if self.andy_spoken:
@@ -132,6 +136,14 @@ class Andy:
             except googleapiclient.errors.HttpError:
                 self.say("An error occurred while connecting to Google \
                 Calendar")
+                return
+        if "sms" in labels:
+            try:
+                result = self.sms.route_command(command, self.say, listen)
+                if result:
+                    return
+            except TwilioException:
+                self.say("An error occured while connecting to Twilio")
                 return
         self.say("Cannot understand command")
 

@@ -11,6 +11,7 @@ class Andy_Helper:
                       "quiet", "loud", ],
             "weather": ["weather", ],
             "calendar": ["calendar", "schedule", "events", ],
+            "sms": ["text", "message", "sms"],
         }
 
     def classify_command(self, command):

@@ -1,17 +1,17 @@
 class ModuleHelper:
+    """A base class for each of the submodule helpers which turn commands
+        into translated lables.
+
+    Attributes:
+        positive_words: a list of words which are affirmative responses to
+            questions
+        negative_words: a list of words which are negative responses to
+            questions
+        number_dict: a dictionary from string words to their corresponding
+            ints
+    """
 
     def __init__(self):
-        """A base class for each of the submodule helpers which turn commands
-            into translated lables.
-
-        Attributes:
-            positive_words: a list of words which are affirmative responses to
-                questions
-            negative_words: a list of words which are negative responses to
-                questions
-            number_dict: a dictionary from string words to their corresponding
-                ints
-        """
         self.positive_words = ["yes", "sure", "ok"]
         self.negative_words = ["no", "nope"]
         self.number_dict = self.init_number_dict()

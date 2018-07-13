@@ -53,9 +53,7 @@ class CalendarHelper(ModuleHelper):
 
             Returns:
                 the label of the first regular expression in
-                self.spotify_re which matches command, then either None or
-                the query to search for if the command was requesting a search
-                of spotify.
+                self.calendar_re which matches command, then None
         """
         for label in self.calendar_re:
             for regexp in self.calendar_re[label]:
