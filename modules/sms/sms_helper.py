@@ -7,7 +7,8 @@ class SMSHelper(ModuleHelper):
     def __init__(self):
         ModuleHelper.__init__(self)
         self.sms_re = {
-            "send": [re.compile("[A-Z|a-z|\'| ]*send( | a )(message|text|sms)[A-Z|a-z|\'| ]*"), ],
+            "send": [re.compile("[A-Z|a-z|\'| ]*send( | a )(message|text|sms)\
+[A-Z|a-z|\'| ]*"), ],
         }
 
     def parse_command(self, command):

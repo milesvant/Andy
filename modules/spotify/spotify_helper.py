@@ -15,25 +15,33 @@ class SpotifyHelper(ModuleHelper):
     def __init__(self):
         ModuleHelper.__init__(self)
         self.spotify_re = [
-            ("resume", [re.compile('[A-Z|a-z| ]*(resume|play)( spotify| music| my music)?'), ]),
-            ("pause", [re.compile('[A-Z|a-z| ]*(pause|stop)( spotify| music| my music)?'), ]),
+            ("resume", [re.compile('[A-Z|a-z| ]*(resume|play)( spotify| music| \
+my music)?'), ]),
+            ("pause", [re.compile('[A-Z|a-z| ]*(pause|stop)( spotify| music| \
+my music)?'), ]),
             ("next", [re.compile('[A-Z|a-z| ]*skip[A-Z|a-z| ]*'),
                       re.compile('[A-Z|a-z| ]*next( song)?'), ]),
             ("previous", [re.compile('[A-Z|a-z| ]*previous( song)?'),
-                          re.compile('[A-Z|a-z| ]*song before[A-Z|a-z| ]*'), ]),
+                          re.compile('[A-Z|a-z| ]*song before[A-Z|a-z| ]*')]),
             ("play playlist", [
-             re.compile('[A-Z|a-z|\'| ]*(play)[A-Z|a-z|\'| ]*(playlist)[A-Z|a-z|\'| |0-9|\!]*')]),
+             re.compile('[A-Z|a-z|\'| ]*(play)[A-Z|a-z|\'| ]*(playlist)\
+[A-Z|a-z|\'| |0-9|\!]*')]),
             ("search", [
-             re.compile('[A-Z|a-z| ]*play [A-Z|a-z|\'| |0-9]+( by [A-Z|a-z|\'| |0-9]+)?( on spotify)?'), ]),
-            ("current", [re.compile('[A-Z|a-z|\'| ]*what[A-Z|a-z|\'| ]+(song|playing|playing now)\??'), ]),
+             re.compile('[A-Z|a-z| ]*play [A-Z|a-z|\'| |0-9]+( by \
+[A-Z|a-z|\'| |0-9]+)?( on spotify)?'), ]),
+            ("current", [re.compile('[A-Z|a-z|\'| ]*what[A-Z|a-z|\'| ]+(song|\
+playing|playing now)\??'), ]),
             ("list playlist", [
-             re.compile('[A-Z|a-z|\'| ]*(list|what)[A-Z|a-z|\'| ]*playlist(s)?[A-Z|a-z|\'| ]*')]),
+             re.compile('[A-Z|a-z|\'| ]*(list|what)[A-Z|a-z|\'| ]*playlist(s)?\
+[A-Z|a-z|\'| ]*')]),
             ("volume up", [
-             re.compile('[A-Z|a-z|\'| ]*(volume|sound|song) up[A-Z|a-z|\'| ]*'),
+             re.compile('[A-Z|a-z|\'| ]*(volume|sound|song) up[A-Z|a-z|\'|\
+ ]*'),
              re.compile('[A-Z|a-z|\'| ]*loud(er)?[A-Z|a-z|\'| ]*'),
              ]),
             ("volume down", [
-                re.compile('[A-Z|a-z|\'| ]*(volume|sound|song) down[A-Z|a-z|\'| ]*'),
+                re.compile('[A-Z|a-z|\'| ]*(volume|sound|song) down[A-Z|a-z|\'|\
+ ]*'),
                 re.compile('[A-Z|a-z|\'| ]*quiet(er)?[A-Z|a-z|\'| ]*'),
             ]),
         ]

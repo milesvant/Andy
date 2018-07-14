@@ -8,22 +8,42 @@ class WeatherHelper(ModuleHelper):
         Attributes:
             weather_re: a dictionary from string labels to lists of regular
                 expressions which match commands with similar meanings (e.g.
-                'What's the weather today?' and 'What's the weather outside now')
+                'What's the weather today?' and 'What's the weather outside
+                now')
     """
 
     def __init__(self):
         ModuleHelper.__init__(self)
         self.weather_re = {
-            "current today": [re.compile('[A-Z|a-z|\'| ]*weather (outside )?(going to be )?today\??'),
-                              re.compile('[A-Z|a-z|\'| ]*weather (outside )?(now|like)\??'), ],
-            "current tomorrow": [re.compile('[A-Z|a-z|\'| ]*weather (going to be )?tomorrow\??'), ],
-            "external today": [re.compile('[A-Z|a-z|\'| ]*weather (going to be )?today in [A-Z|a-z|\'| ]+?'),
-                               re.compile('[A-Z|a-z|\'| ]*weather now in [A-Z|a-z|\'| ]+\??'),
-                               re.compile(
-                                   '[A-Z|a-z|\'| ]*weather in [A-Z|a-z|\'| ]+ (going to be )?today\??'),
-                               re.compile('[A-Z|a-z|\'| ]*weather in [A-Z|a-z|\'| ]+ now\??'), ],
-            "external tomorrow": [re.compile('[A-Z|a-z|\'| ]*weather (going to be )?tomorrow in [A-Z|a-z|\'| ]+\??'),
-                                  re.compile('[A-Z|a-z|\'| ]*weather in [A-Z|a-z|\'| ]+( going to be)? tomorrow\??'), ],
+            # weather today in the current location
+            "current today": [re.compile('[A-Z|a-z|\'| ]*weather (outside )?\
+(going to be )?today\??'),
+                              re.compile('[A-Z|a-z|\'| ]*weather (outside )?\
+(now|like)\??'), ],
+            # weather tomorrow in the current location
+            "current tomorrow": [re.compile('[A-Z|a-z|\'| ]*weather (going to \
+be )?tomorrow\??'), ],
+            # weather today in an external location
+            "external today": [re.compile('[A-Z|a-z|\'| ]*weather \
+(going to be )?today in [A-Z|a-z|\'| ]+?'),
+                               re.compile('[A-Z|a-z|\'| ]*weather now in \
+[A-Z|a-z|\'| ]+\??'),
+                               re.compile('[A-Z|a-z|\'| ]*weather in \
+[A-Z|a-z|\'| ]+ (going to be )?today\??'),
+                               re.compile('[A-Z|a-z|\'| ]*weather in \
+[A-Z|a-z|\'| ]+ now\??'), ],
+            # weather tomorrow in an external location
+            "external tomorrow": [re.compile('[A-Z|a-z|\'| ]*weather (going to \
+be )?tomorrow in [A-Z|a-z|\'| ]+\??'),
+                                  re.compile('[A-Z|a-z|\'| ]*weather in \
+[A-Z|a-z|\'| ]+( going to be)? tomorrow\??'), ],
+            # weather on specified date in current location
+            "current specific": [re.compile('[A-Z|a-z|\'| ]*weather (going to \
+be )?on (monday|tuesday|wednesday|thursday|friday|saturday|sunday)\??'), ],
+            # weather on specified date in external location
+            "external specific": [re.compile('[A-Z|a-z|\'| ]*weather (going to \
+be )?on (monday|tuesday|wednesday|thursday|friday|saturday|sunday) in \
+[A-Z|a-z|\| ]+\??'), ],
         }
 
     def parse_command(self, command):

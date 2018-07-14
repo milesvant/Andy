@@ -20,9 +20,12 @@ class CalendarHelper(ModuleHelper):
     def __init__(self):
         ModuleHelper.__init__(self)
         self.calendar_re = {
-            "today events": [re.compile('[A-Z|a-z| |\']*(calendar|schedule|events)[A-Z|a-z| |\']*today\??'), ],
-            "tomorrow events": [re.compile('[A-Z|a-z| |\']*(calendar|schedule|events)[A-Z|a-z| |\']*tomorrow\??'), ],
-            "current week events": [re.compile('[A-Z|a-z| |\']*(calendar|schedule|events)[A-Z|a-z| |\']*(this|next) week\??'), ],
+            "today events": [re.compile('[A-Z|a-z| |\']*(calendar|schedule|\
+events)[A-Z|a-z| |\']*today\??'), ],
+            "tomorrow events": [re.compile('[A-Z|a-z| |\']*(calendar|schedule\
+|events)[A-Z|a-z| |\']*tomorrow\??'), ],
+            "current week events": [re.compile('[A-Z|a-z| |\']*(calendar|\
+schedule|events)[A-Z|a-z| |\']*(this|next) week\??'), ],
         }
 
         self.int_to_weekday = {
