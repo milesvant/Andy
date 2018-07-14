@@ -17,7 +17,7 @@ class ModuleHelper:
     """
 
     def __init__(self):
-        self.positive_words = ["yes", "sure", "ok"]
+        self.positive_words = ["yes", "sure", "ok", "correct", "yep"]
         self.negative_words = ["no", "nope"]
         self.number_dict = self.init_number_dict()
         self.int_to_weekday = {
