@@ -91,6 +91,28 @@ class Weather:
             return self._OWM.three_hours_forecast(
                 location).get_weather_at(tomorrow)
 
+    def get_specific_day_weather(self, day, location=None):
+        """Gets the weather on a specified day of the week at some location.
+
+           Args:
+                day: an int representing the day of the week (where 0 is
+                    monday and 6 is sunday)
+                location: The (string) name of a location to find the weather
+                    at, defaults to None and uses current location if no arg
+                    is given.
+        """
+        curr_wd = datetime.now().weekday()
+        day = datetime.now() + \
+            timedelta((day - curr_wd) % 7)
+        if location is None:
+            return self._OWM.three_hours_forecast_at_coords(
+                self.current_location['latitude'],
+                self.current_location['longitude'],
+            ).get_weather_at(day)
+        else:
+            return self._OWM.three_hours_forecast(
+                location).get_weather_at(day)
+
     def translate_weather_code(self, code):
         """Translates a numerical OWM weather status code to its english
             equivalent."""
@@ -116,12 +138,12 @@ class Weather:
             Args:
                 command: a string command which requests some information about
                     the weather.
-                say: A function which will say (either through text to speech
+                say: A function which will say(either through text to speech
                     or printing) a string in the main speaker loop
                 listen: A function which will listen and record user input
                     through either speech to text or through the CLI
             Returns:
-                True if a command was executed (or failed while executed) and
+                True if a command was executed(or failed while executed) and
                     false if the command was invalid.
         """
         label, external_location = self.helper.parse_command(command)
@@ -130,14 +152,16 @@ class Weather:
             weather_code = self.translate_weather_code(
                 weather.get_weather_code())
             if weather_code is not None:
-                say('The weather today in {} will be {} with a minimum of {} degrees and a maximum of {} degrees.'.format(
+                say('The weather today in {} will be {} with a minimum of {} \
+degrees and a maximum of {} degrees.'.format(
                     self.current_location['city'],
                     weather_code,
                     weather.get_temperature(unit='fahrenheit')['temp_min'],
                     weather.get_temperature(unit='fahrenheit')['temp_max'],
                 ))
             else:
-                say('The weather today in {} will be a minimum of {} degrees and a maximum of {} degrees.'.format(
+                say('The weather today in {} will be a minimum of {} degrees \
+and a maximum of {} degrees.'.format(
                     self.current_location['city'],
                     weather.get_temperature(unit='fahrenheit')['temp_min'],
                     weather.get_temperature(unit='fahrenheit')['temp_max'],
@@ -147,7 +171,8 @@ class Weather:
             weather_code = self.translate_weather_code(
                 weather.get_weather_code())
             if weather_code is not None:
-                say('The weather tomorrow in {} will be {} and {} degrees.'.format(
+                say('The weather tomorrow in {} will be {} and {} \
+degrees.'.format(
                     self.current_location['city'],
                     weather_code,
                     weather.get_temperature(unit='fahrenheit')['temp_max'],
@@ -164,14 +189,16 @@ class Weather:
                 weather_code = self.translate_weather_code(
                     weather.get_weather_code())
                 if weather_code is not None:
-                    say('The weather today in {} will be {} with a minimum of {} degrees and a maximum of {} degrees.'.format(
+                    say('The weather today in {} will be {} with a minimum of \
+{} degrees and a maximum of {} degrees.'.format(
                         external_location,
                         weather_code,
                         weather.get_temperature(unit='fahrenheit')['temp_min'],
                         weather.get_temperature(unit='fahrenheit')['temp_max'],
                     ))
                 else:
-                    say('The weather today in {} will be a minimum of {} degrees and a maximum of {} degrees.'.format(
+                    say('The weather today in {} will be a minimum of {} \
+degrees and a maximum of {} degrees.'.format(
                         external_location,
                         weather.get_temperature(unit='fahrenheit')['temp_min'],
                         weather.get_temperature(unit='fahrenheit')['temp_max'],
@@ -184,15 +211,60 @@ class Weather:
                 weather_code = self.translate_weather_code(
                     weather.get_weather_code())
                 if weather_code is not None:
-                    say('The weather tomorrow in {} will be {} and {} degrees.'.format(
+                    say('The weather tomorrow in {} will be {} and {} \
+degrees.'.format(
                         external_location,
                         weather_code,
                         weather.get_temperature(unit='fahrenheit')['temp_min'],
                     ))
                 else:
-                    say('The weather tomorrow in {} will be {} degrees.'.format(
+                    say('The weather tomorrow in {} will be {} degrees.\
+'.format(
                         external_location,
                         weather.get_temperature(unit='fahrenheit')['temp_min'],
+                    ))
+            except NotFoundError:
+                say("Please clarify your weather query.")
+        elif label == "current specific":
+            weather = self.get_specific_day_weather(external_location)
+            weather_code = self.translate_weather_code(
+                weather.get_weather_code())
+            if weather_code is not None:
+                say('The weather on {} in {} will be {} and {} \
+degrees.'.format(
+                    self.helper.int_to_weekday[external_location],
+                    self.current_location['city'],
+                    weather_code,
+                    weather.get_temperature(unit='fahrenheit')['temp_max'],
+                ))
+            else:
+                say('The weather tomorrow on {} in {} will be {} \
+degrees.'.format(
+                    self.helper.int_to_weekday[external_location],
+                    self.current_location['city'],
+                    weather.get_temperature(unit='fahrenheit')['temp_max'],
+                ))
+        elif label == "external specific":
+            try:
+                day, external_location = external_location
+                weather = self.get_specific_day_weather(day=day,
+                                                        location=external_location)
+                weather_code = self.translate_weather_code(
+                    weather.get_weather_code())
+                if weather_code is not None:
+                    say('The weather on {} in {} will be {} and {} \
+    degrees.'.format(
+                        self.helper.int_to_weekday[day],
+                        external_location,
+                        weather_code,
+                        weather.get_temperature(unit='fahrenheit')['temp_max'],
+                    ))
+                else:
+                    say('The weather tomorrow on {} in {} will be {} \
+degrees.'.format(
+                        self.helper.int_to_weekday[day],
+                        external_location,
+                        weather.get_temperature(unit='fahrenheit')['temp_max'],
                     ))
             except NotFoundError:
                 say("Please clarify your weather query.")

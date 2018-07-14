@@ -43,7 +43,10 @@ be )?on (monday|tuesday|wednesday|thursday|friday|saturday|sunday)\??'), ],
             # weather on specified date in external location
             "external specific": [re.compile('[A-Z|a-z|\'| ]*weather (going to \
 be )?on (monday|tuesday|wednesday|thursday|friday|saturday|sunday) in \
-[A-Z|a-z|\| ]+\??'), ],
+[A-Z|a-z|\'| ]+\??'),
+                                  re.compile('[A-Z|a-z|\'| ]*weather (going to \
+be )?in [A-Z|a-z|\'| ]+ on (monday|tuesday|wednesday|thursday|friday|saturday\
+|sunday)\??')],
         }
 
     def parse_command(self, command):
@@ -62,13 +65,30 @@ be )?on (monday|tuesday|wednesday|thursday|friday|saturday|sunday) in \
         for label in self.weather_re:
             for regexp in self.weather_re[label]:
                 if regexp.fullmatch(command):
-                    if "external" in label:
+                    if "external" in label and "specific" not in label:
                         splits = command.split("in ")[1].split(" ")
                         if len(splits) == 1 or len(splits) == 2:
                             external_location = splits[0]
                         else:
                             external_location = " ".join(splits[0:-1])
                         return label, external_location
+                    elif label == "external specific":
+                        if command.find(" on ") < command.find(" in "):
+                            split_on = command.split(" on ")[1]
+                            split_in = split_on.split(" in ")
+                            day = self.weekday_to_int[split_in[0]]
+                            external_location = split_in[1].replace('?', '')
+                            return label, (day, external_location)
+                        else:
+                            split_in = command.split(" in ")[1]
+                            split_on = split_in.split(" on ")
+                            day = self.weekday_to_int[split_on[1]]
+                            external_location = split_on[0].replace('?', '')
+                            return label, (day, external_location)
+                    elif label == "current specific":
+                        day = self.weekday_to_int[
+                            command.split("on ")[1].replace('?', '')]
+                        return label, day
                     else:
                         return label, None
         return None, None

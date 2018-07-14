@@ -9,12 +9,35 @@ class ModuleHelper:
             questions
         number_dict: a dictionary from string words to their corresponding
             ints
+        int_to_weekday: a dictionary from ints to the corresponding string
+            of the day of the week (where Monday is 0 and Sunday is 6)
+        weekeday_to_int: a dictionary from string names of the days of the
+            week to their corresponding index in the week
+            (i.e. 0 -> monday)
     """
 
     def __init__(self):
         self.positive_words = ["yes", "sure", "ok"]
         self.negative_words = ["no", "nope"]
         self.number_dict = self.init_number_dict()
+        self.int_to_weekday = {
+            0: "Monday",
+            1: "Tuesday",
+            2: "Wednesday",
+            3: "Thursday",
+            4: "Friday",
+            5: "Saturday",
+            6: "Sunday",
+        }
+        self.weekday_to_int = {
+            "monday": 0,
+            "tuesday": 1,
+            "wednesday": 2,
+            "thursday": 3,
+            "friday": 4,
+            "saturday": 5,
+            "sunday": 6,
+        }
 
     def init_number_dict(self):
         """Creates a dictionary from strings of numbers to the corresponding
