@@ -57,9 +57,28 @@ class SMS:
         number_string = listen()
         # Convert to form usable by Twilio Client Library
         number_string.replace('-', '')
+        # Confirm number is correct
+        confirmed = False
+        while not confirmed:
+            say("Please confirm number: {}".format(number_string))
+            response = listen()
+            if response in self.helper.positive_words:
+                break
+            say("Enter number again please: ")
+            number_string = listen()
+            number_string.replace('-', '')
         number_string = "+1" + number_string
         say("Ready for message")
         message = listen()
+        # Confirm message is correct
+        confirmed = False
+        while not confirmed:
+            say("Please confirm message: {}".format(message))
+            response = listen()
+            if response in self.helper.positive_words:
+                break
+            say("Enter message again please: ")
+            message = listen()
         message = "{}\n{}".format(message, self.sms_suffix)
         try:
             self.client.messages.create(
