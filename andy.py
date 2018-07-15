@@ -13,10 +13,12 @@ from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
 from twilio.base.exceptions import TwilioException
+from wikipedia.exceptions import WikipediaException
 from modules.spotify.spotify import Spotify
 from modules.weather.weather import Weather
 from modules.andy_calendar.andy_calendar import Calendar
 from modules.sms.sms import SMS
+from modules.wiki.wiki import Wiki
 from modules.speech_to_text.speech_to_text import AndySpeechToText
 from andy_helper import Andy_Helper
 
@@ -49,6 +51,7 @@ class Andy:
         self.weather = Weather()
         self.calendar = Calendar()
         self.sms = SMS(sms_name)
+        self.wiki = Wiki()
         self.helper = Andy_Helper()
         self.kernel = aiml.Kernel()
         self.load_aiml()
@@ -144,6 +147,14 @@ class Andy:
                     return
             except TwilioException:
                 self.say("An error occured while connecting to Twilio")
+                return
+        if "wiki" in labels:
+            try:
+                result = self.wiki.route_command(command, self.say, listen)
+                if result:
+                    return
+            except WikipediaException:
+                self.say("An error occurred while connecting to Wikipedia")
                 return
         self.say("Cannot understand command")
 

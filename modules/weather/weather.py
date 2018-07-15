@@ -20,7 +20,7 @@ class Weather:
             and longitude of this Weather instance. Weather can be determined
             for areas other than the current position, but the current
             information is cached to reduce API requests.
-        helper: a Weather_Helper object which will perform the parsing
+        helper: a WeatherHelper object which will perform the parsing
             and interpretation of commands for this class.
     """
 

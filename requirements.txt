@@ -4,6 +4,7 @@ alembic==0.9.9
 arrow==0.12.1
 astor==0.7.1
 backports.weakref==1.0rc1
+beautifulsoup4==4.6.0
 bleach==1.5.0
 boto==2.48.0
 boto3==1.7.25
@@ -63,6 +64,7 @@ pyasn1==0.4.3
 pyasn1-modules==0.2.1
 PyAudio==0.2.11
 pycurl==7.43.0.1
+PyJWT==1.6.4
 pyobjc==4.2.2
 pyobjc-core==4.2.2
 pyobjc-framework-Accounts==4.2.2
@@ -149,6 +151,7 @@ pyobjc-framework-WebKit==4.2.2
 pyowm==2.8.0
 pyparsing==2.2.0
 pyquery==1.4.0
+PySocks==1.6.8
 pyspider==0.3.10
 python-dateutil==2.7.3
 python-editor==1.0.3
@@ -174,11 +177,13 @@ termcolor==1.1.0
 textblob==0.15.1
 texttable==0.9.1
 tornado==4.5.3
+twilio==6.14.9
 u-msgpack-python==2.5.0
 uritemplate==3.0.0
 urllib3==1.22
 virtualenv==16.0.0
 websocket-client==0.47.0
 Werkzeug==0.14.1
+wikipedia==1.4.0
 WsgiDAV==2.3.0
 WTForms==2.1
