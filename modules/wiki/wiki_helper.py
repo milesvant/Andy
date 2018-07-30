@@ -16,7 +16,7 @@ class WikiHelper(ModuleHelper):
         ModuleHelper.__init__(self)
         self.wiki_re = {
             "search": [re.compile("[A-Z|a-z|\'| ]*(search|look up) [A-Z|a-z\
-|\'|0-9| |:]*(on wikipedia)?"), re.compile("[A-Z|a-z|\'| ]*(what is|who is) \
+|\'|0-9| |:]*(on wikipedia)?"), re.compile("[A-Z|a-z|\'| ]*(what|who)( is| are) \
 [A-Z|a-z|\'|0-9| |:]*\??"), ],
         }
 
@@ -44,6 +44,14 @@ class WikiHelper(ModuleHelper):
                         elif "who is " in command:
                             command = command.split("who is ")[1].replace(
                                 "?", "")
+                        elif "what are " in command:
+                            command = command.split("what are ")[1].replace(
+                                "?", ""
+                            )
+                        elif "who are " in command:
+                            command = command.split("who are ")[1].replace(
+                                "?", ""
+                            )
                         if "on wikipedia" in command:
                             command = command.split(" on wikipedia")[0]
                         return label, command

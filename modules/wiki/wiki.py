@@ -29,8 +29,8 @@ class Wiki:
         """
         label, query = self.helper.parse_command(command)
         if label == "search":
-            say("Searching for information about {} on Wikipedia".format(
-                query))
+            # say("Searching for information about {} on Wikipedia".format(
+            #    query))
             try:
                 say(wikipedia.summary(query, sentences=2))
             except wikipedia.exceptions.PageError:

@@ -12,7 +12,7 @@ class Andy_Helper:
             "weather": ["weather", ],
             "calendar": ["calendar", "schedule", "events", ],
             "sms": ["text", "message", "sms"],
-            "wiki": ["search", "look up", "what is ", "who is "],
+            "wiki": ["search", "look up", "what is ", "who is ", "what are ", "who are "],
         }
 
     def classify_command(self, command):

@@ -86,7 +86,7 @@ class SMS:
                 from_=self.twilio_number,
                 to=number_string
             )
-            say("Message succesfully sent")
+            say("Message successfully sent")
         except TwilioException:
             say("Failure while sending message")
 
