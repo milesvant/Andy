@@ -8,3 +8,5 @@ __pycache__/
 .DS_Store
 *.wav
 speech_commands/
+conv_labels.txt
+frozen_graph.pb

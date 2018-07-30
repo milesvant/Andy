@@ -21,6 +21,7 @@ from modules.sms.sms import SMS
 from modules.wiki.wiki import Wiki
 from modules.speech_to_text.speech_to_text import AndySpeechToText
 from andy_helper import Andy_Helper
+from time import sleep
 
 
 class Andy:
@@ -81,8 +82,12 @@ class Andy:
     def prompt(self):
         """Prompts the user for input to Andy"""
         if self.user_spoken:
-            command = self.stt.record_and_convert()
+            self.stt.detect_wake_word()
+            print(">")
+            sleep(0.2)
+            command = self.stt.record_and_convert(after_wake_word=True)
             if command is None:
+                print("yep")
                 command = ""
             self.route_command(command.lower())
         else:
