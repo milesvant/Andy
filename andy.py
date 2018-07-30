@@ -20,6 +20,7 @@ from modules.andy_calendar.andy_calendar import Calendar
 from modules.sms.sms import SMS
 from modules.wiki.wiki import Wiki
 from modules.speech_to_text.speech_to_text import AndySpeechToText
+from modules.sports.sports import Sports
 from andy_helper import Andy_Helper
 from time import sleep
 
@@ -53,6 +54,7 @@ class Andy:
         self.calendar = Calendar()
         self.sms = SMS(sms_name)
         self.wiki = Wiki()
+        self.sports = Sports()
         self.helper = Andy_Helper()
         self.kernel = aiml.Kernel()
         self.load_aiml()
@@ -160,6 +162,10 @@ class Andy:
                     return
             except WikipediaException:
                 self.say("An error occurred while connecting to Wikipedia")
+                return
+        if "sports" in labels:
+            result = self.sports.route_command(command, self.say, listen)
+            if result:
                 return
         self.say("Cannot understand command")
 

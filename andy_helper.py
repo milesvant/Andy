@@ -13,6 +13,7 @@ class Andy_Helper:
             "calendar": ["calendar", "schedule", "events", ],
             "sms": ["text", "message", "sms"],
             "wiki": ["search", "look up", "what is ", "who is ", "what are ", "who are "],
+            "sports": ["score", "game", ],
         }
 
     def classify_command(self, command):
