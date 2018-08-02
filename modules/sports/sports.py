@@ -67,7 +67,7 @@ time"
             index = self.helper.dataframe_first_instance_of(
                 dataframe, self.helper.date_to_dataframe_index(yesterday))
             if index == -1 or isnan(index):
-                say("could not find information about that game at this\
+                say("Could not find information about that game at this\
 time")
                 return True
             opp = self.helper.abbrev_to_baseball_teams[dataframe['Opp'][index]]
@@ -75,13 +75,13 @@ time")
             runs_against = int(dataframe['RA'][index])
             if not isnan(runs):
                 if runs > runs_against:
-                    response = "the {} beat the {} yesterday, {} to {}".format(
+                    response = "The {} beat the {} yesterday, {} to {}".format(
                         args, opp, runs, runs_against)
                 else:
-                    response = "the {} lost to the {} yesterday, {} to {}".format(
+                    response = "The {} lost to the {} yesterday, {} to {}".format(
                         args, opp, runs, runs_against)
             else:
-                response = "could not find information about that game at this\
+                response = "Could not find information about that game at this\
 time"
             say(response)
         # if the game was on a day of the week which was specified
@@ -93,7 +93,7 @@ time"
             index = self.helper.dataframe_first_instance_of(
                 dataframe, self.helper.date_to_dataframe_index(day))
             if index == -1 or isnan(index):
-                say("could not find information about that game at this\
+                say("Could not find information about that game at this\
 time")
                 return True
             opp = self.helper.abbrev_to_baseball_teams[dataframe['Opp'][index]]
@@ -101,15 +101,31 @@ time")
             runs_against = int(dataframe['RA'][index])
             if not isnan(runs):
                 if runs > runs_against:
-                    response = "the {} beat the {} on {}, {} to {}".format(
+                    response = "The {} beat the {} on {}, {} to {}".format(
                         args['team'], opp, args['day'], runs, runs_against)
                 else:
-                    response = "the {} lost to the {} on {}, {} to {}".format(
+                    response = "The {} lost to the {} on {}, {} to {}".format(
                         args['team'], opp, args['day'], runs, runs_against)
             else:
-                response = "could not find information about that game at this\
+                response = "Could not find information about that game at this\
 time"
             say(response)
+        elif label == "record":
+            current_year = datetime.utcnow().date().year
+            dataframe = schedule_and_record(
+                current_year, self.helper.baseball_teams_to_abbrev[args])
+            record = self.helper.dataframe_last_non_nan(dataframe)
+            if record == "":
+                say("Could not find information about that season at this\
+time")
+            else:
+                wins, losses = record.split("-")
+                response = "The {}\'s record this season is {} wins and {} \
+losses".format(
+                    args, wins, losses
+                )
+                say(response)
+
         else:
             return False
         return True

@@ -27,6 +27,10 @@ a-z|\'| ]+ game yesterday\??')],
             'result specific': [re.compile('[A-Z|a-z|\'| ]*score of the [A-Z|\
 a-z|\'| ]+ game (on|last) (monday|tuesday|wednesday|thursday|friday|saturday|\
 sunday)\??')],
+            'record': [re.compile(
+                '[A-Z|a-z|\'| ]*record (of|for) the [A-Z|a-z|\'| ]+\
+( this year)?\??'), re.compile('[A-Z|a-z|\'| ]*the [A-Z|a-z|\'| ]* record( this\
+ year)?\??')],
         }
         self.baseball_teams_to_abbrev = {
             'diamondbacks': 'ARI',
@@ -127,6 +131,21 @@ sunday)\??')],
                 pass
         return -1
 
+    def dataframe_last_non_nan(self, df):
+        """Finds the last instance of a W-L record that isn't nan in a pandas
+            series."""
+        last = None
+        for i in range(len(df['W-L'])):
+            try:
+                record = df['W-L'][i]
+                if record is None:
+                    return last
+                else:
+                    last = record
+            except KeyError:
+                pass
+        return ""
+
     def parse_command(self, command):
         """Transforms a command into a label.
 
@@ -157,4 +176,23 @@ sunday)\??')],
                         if '?' in day_of_week:
                             day_of_week = day_of_week[:-1]
                         return label, {"team": team_name, "day": day_of_week}
+                    elif label == "record":
+                        if command.endswith('?'):
+                            command = command.split('?')[0]
+                        if command.endswith('record') or command.endswith('record this year'):
+                            team_name = (command.split(" record")[0]).split(
+                                " the ")[1]
+                            if team_name.endswith("\'s"):
+                                team_name = team_name[:-2]
+                            elif team_name.endswith("\'"):
+                                team_name = team_name[:-1]
+                            return label, team_name
+                        else:
+                            if " of the " in command:
+                                team_name = command.split(" of the ")[1]
+                            else:
+                                team_name = command.split(" for the ")[1]
+                            if " this year" in command:
+                                team_name = team_name.split(" this year")[0]
+                            return label, team_name
         return None, None

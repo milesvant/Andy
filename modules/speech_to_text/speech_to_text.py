@@ -264,8 +264,8 @@ class AndySpeechToText:
 
     def is_wake_word(self, scores):
         """True if the scores dictionary says the probability that file was of
-            the word 'marvin' is greater than 95%, and False otherwise."""
-        return (scores['marvin'] > 0.95)
+            the word 'marvin' is greater than 90%, and False otherwise."""
+        return (scores['marvin'] > 0.90)
 
     def detect_wake_word(self):
         """Loops until the word 'marvin' is detected, then returns."""
