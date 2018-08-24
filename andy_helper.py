@@ -14,11 +14,12 @@ class Andy_Helper:
             "sms": ["text", "message", "sms"],
             "wiki": ["search", "look up", "what is ", "who is ", "what are ", "who are "],
             "sports": ["score", "game", "record", ],
+            "stocks": ["stock"],
         }
 
     def classify_command(self, command):
-        """Translates a command into a label which describes what kind of
-            command it is (e.g. music or weather)"""
+        """Translates a command into a labels which describes what kind of
+            command it could be (e.g. music or weather)"""
         labels = []
         for label in self.command_keywords:
             for keyword in self.command_keywords[label]:

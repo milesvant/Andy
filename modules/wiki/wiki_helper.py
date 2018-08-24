@@ -28,7 +28,7 @@ class WikiHelper(ModuleHelper):
 
             Returns:
                 the label of the first regular expression in
-                self.wiki_re which matches command
+                self.wiki_re which matches command, then the search term
         """
         for label in self.wiki_re:
             for regexp in self.wiki_re[label]:

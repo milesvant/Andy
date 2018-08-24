@@ -277,4 +277,22 @@ class AndySpeechToText:
             self.record_to_file(filepath)
             done = self.is_wake_word(self.label_wav(filepath))
             os.remove(filepath)
+        self.play_notification_sound()
         return
+
+    def play_notification_sound(self):
+        current_dir = os.path.abspath(os.path.dirname(__file__))
+
+        f = wave.open("{}/files/notification.wav".format(current_dir), "rb")
+        p = pyaudio.PyAudio()
+        stream = p.open(format=p.get_format_from_width(f.getsampwidth()),
+                        channels=f.getnchannels(),
+                        rate=f.getframerate(),
+                        output=True)
+        data = f.readframes(self.CHUNK_SIZE)
+        while data:
+            stream.write(data)
+            data = f.readframes(self.CHUNK_SIZE)
+        stream.stop_stream()
+        stream.close()
+        p.terminate()

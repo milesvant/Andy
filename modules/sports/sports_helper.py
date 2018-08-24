@@ -29,8 +29,8 @@ a-z|\'| ]+ game (on|last) (monday|tuesday|wednesday|thursday|friday|saturday|\
 sunday)\??')],
             'record': [re.compile(
                 '[A-Z|a-z|\'| ]*record (of|for) the [A-Z|a-z|\'| ]+\
-( this year)?\??'), re.compile('[A-Z|a-z|\'| ]*the [A-Z|a-z|\'| ]* record( this\
- year)?\??')],
+( this year| this season)?\??'), re.compile('[A-Z|a-z|\'| ]*the [A-Z|a-z|\'| ]* record( this\
+ year| this season)?\??')],
         }
         self.baseball_teams_to_abbrev = {
             'diamondbacks': 'ARI',
@@ -55,7 +55,7 @@ sunday)\??')],
             'phillies': 'PHI',
             'pirates': 'PIT',
             'mariners': 'SEA',
-            'padres': 'SD',
+            'padres': 'SDP',
             'giants': 'SF',
             'cardinals': 'STL',
             'rays': 'TB',
@@ -86,7 +86,7 @@ sunday)\??')],
             'PHI': 'phillies',
             'PIT': 'pirates',
             'SEA': 'mariners',
-            'SD': 'padres',
+            'SDP': 'padres',
             'SFG': 'giants',
             'STL': 'cardinals',
             'TB': 'rays',

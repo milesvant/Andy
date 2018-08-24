@@ -21,6 +21,7 @@ from modules.sms.sms import SMS
 from modules.wiki.wiki import Wiki
 from modules.speech_to_text.speech_to_text import AndySpeechToText
 from modules.sports.sports import Sports
+from modules.stocks.stocks import Stocks
 from andy_helper import Andy_Helper
 from time import sleep
 
@@ -55,6 +56,7 @@ class Andy:
         self.sms = SMS(sms_name)
         self.wiki = Wiki()
         self.sports = Sports()
+        self.stocks = Stocks()
         self.helper = Andy_Helper()
         self.kernel = aiml.Kernel()
         self.load_aiml()
@@ -87,11 +89,13 @@ class Andy:
             self.stt.detect_wake_word()
             print(">")
             sleep(0.2)
-            command = self.stt.record_and_convert(after_wake_word=True)
-            if command is None:
-                print("yep")
-                command = ""
-            self.route_command(command.lower())
+            try:
+                command = self.stt.record_and_convert(after_wake_word=True)
+                if command is None:
+                    command = ""
+                self.route_command(command.lower())
+            except IndexError:
+                return
         else:
             command = self.text_input()
             self.route_command(command.lower())
@@ -155,6 +159,10 @@ class Andy:
             except TwilioException:
                 self.say("An error occured while connecting to Twilio")
                 return
+        if "stocks" in labels:
+            result = self.stocks.route_command(command, self.say, listen)
+            if result:
+                return
         if "wiki" in labels:
             try:
                 result = self.wiki.route_command(command, self.say, listen)
@@ -164,8 +172,12 @@ class Andy:
                 self.say("An error occurred while connecting to Wikipedia")
                 return
         if "sports" in labels:
-            result = self.sports.route_command(command, self.say, listen)
-            if result:
+            try:
+                result = self.sports.route_command(command, self.say, listen)
+                if result:
+                    return
+            except KeyError:
+                self.say("Cannot understand command")
                 return
         self.say("Cannot understand command")
 

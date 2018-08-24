@@ -25,7 +25,7 @@ class WeatherHelper(ModuleHelper):
 be )?tomorrow\??'), ],
             # weather today in an external location
             "external today": [re.compile('[A-Z|a-z|\'| ]*weather \
-(going to be )?today in [A-Z|a-z|\'| ]+?'),
+(going to be )?today in [A-Z|a-z|\'| ]+\??'),
                                re.compile('[A-Z|a-z|\'| ]*weather now in \
 [A-Z|a-z|\'| ]+\??'),
                                re.compile('[A-Z|a-z|\'| ]*weather in \
@@ -71,6 +71,8 @@ be )?in [A-Z|a-z|\'| ]+ on (monday|tuesday|wednesday|thursday|friday|saturday\
                             external_location = splits[0]
                         else:
                             external_location = " ".join(splits[0:-1])
+                        if "going to be" in external_location:
+                            external_location = external_location.split(" going to be")[0]
                         return label, external_location
                     elif label == "external specific":
                         if command.find(" on ") < command.find(" in "):

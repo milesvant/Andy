@@ -1,4 +1,3 @@
-import pandas as pd
 from math import isnan
 from datetime import datetime, timedelta
 from pybaseball import schedule_and_record
@@ -41,21 +40,22 @@ class Sports:
             index = self.helper.dataframe_first_instance_of(
                 dataframe, self.helper.date_to_dataframe_index(today))
             if index == -1:
-                say("could not find information about that game at this\
+                say("Could not find information about that game at this\
 time")
                 return True
             opp = self.helper.abbrev_to_baseball_teams[dataframe['Opp'][index]]
-            runs = int(dataframe['R'][index])
-            runs_against = int(dataframe['RA'][index])
+            runs = dataframe['R'][index]
             if not isnan(runs) or isnan(index):
+                runs = int(dataframe['R'][index])
+                runs_against = int(dataframe['RA'][index])
                 if runs > runs_against:
-                    response = "the {} beat the {} today, {} to {}".format(
+                    response = "The {} beat the {} today, {} to {}".format(
                         args, opp, runs, runs_against)
                 else:
-                    response = "the {} lost to the {} today, {} to {}".format(
+                    response = "The {} lost to the {} today, {} to {}".format(
                         args, opp, runs, runs_against)
             else:
-                response = "could not find information about that game at this\
+                response = "Could not find information about that game at this\
 time"
             say(response)
         # if the game was yesterday
@@ -71,9 +71,10 @@ time"
 time")
                 return True
             opp = self.helper.abbrev_to_baseball_teams[dataframe['Opp'][index]]
-            runs = int(dataframe['R'][index])
-            runs_against = int(dataframe['RA'][index])
+            runs = dataframe['R'][index]
             if not isnan(runs):
+                runs = int(dataframe['R'][index])
+                runs_against = int(dataframe['RA'][index])
                 if runs > runs_against:
                     response = "The {} beat the {} yesterday, {} to {}".format(
                         args, opp, runs, runs_against)
@@ -97,9 +98,10 @@ time"
 time")
                 return True
             opp = self.helper.abbrev_to_baseball_teams[dataframe['Opp'][index]]
-            runs = int(dataframe['R'][index])
-            runs_against = int(dataframe['RA'][index])
+            runs = dataframe['R'][index]
             if not isnan(runs):
+                runs = int(runs)
+                runs_against = int(dataframe['RA'][index])
                 if runs > runs_against:
                     response = "The {} beat the {} on {}, {} to {}".format(
                         args['team'], opp, args['day'], runs, runs_against)
@@ -125,7 +127,6 @@ losses".format(
                     args, wins, losses
                 )
                 say(response)
-
         else:
             return False
         return True
