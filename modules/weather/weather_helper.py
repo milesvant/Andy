@@ -17,35 +17,35 @@ class WeatherHelper(ModuleHelper):
         self.weather_re = {
             # weather today in the current location
             "current today": [re.compile('[A-Z|a-z|\'| ]*weather (outside )?\
-(going to be )?today\??'),
+(going to be )?(like )?today\??'),
                               re.compile('[A-Z|a-z|\'| ]*weather (outside )?\
 (now|like)\??'), ],
             # weather tomorrow in the current location
             "current tomorrow": [re.compile('[A-Z|a-z|\'| ]*weather (going to \
-be )?tomorrow\??'), ],
+be )?(like )?tomorrow\??'), ],
             # weather today in an external location
             "external today": [re.compile('[A-Z|a-z|\'| ]*weather \
-(going to be )?today in [A-Z|a-z|\'| ]+\??'),
+(going to be )?(like )?today in [A-Z|a-z|\'| ]+\??'),
                                re.compile('[A-Z|a-z|\'| ]*weather now in \
 [A-Z|a-z|\'| ]+\??'),
                                re.compile('[A-Z|a-z|\'| ]*weather in \
-[A-Z|a-z|\'| ]+ (going to be )?today\??'),
+[A-Z|a-z|\'| ]+ (going to be )?(like )?today\??'),
                                re.compile('[A-Z|a-z|\'| ]*weather in \
 [A-Z|a-z|\'| ]+ now\??'), ],
             # weather tomorrow in an external location
             "external tomorrow": [re.compile('[A-Z|a-z|\'| ]*weather (going to \
-be )?tomorrow in [A-Z|a-z|\'| ]+\??'),
+be )?(like )?tomorrow in [A-Z|a-z|\'| ]+\??'),
                                   re.compile('[A-Z|a-z|\'| ]*weather in \
 [A-Z|a-z|\'| ]+( going to be)? tomorrow\??'), ],
             # weather on specified date in current location
             "current specific": [re.compile('[A-Z|a-z|\'| ]*weather (going to \
-be )?on (monday|tuesday|wednesday|thursday|friday|saturday|sunday)\??'), ],
+be )(like )??on (monday|tuesday|wednesday|thursday|friday|saturday|sunday)\??'), ],
             # weather on specified date in external location
             "external specific": [re.compile('[A-Z|a-z|\'| ]*weather (going to \
-be )?on (monday|tuesday|wednesday|thursday|friday|saturday|sunday) in \
+be )(like )??on (monday|tuesday|wednesday|thursday|friday|saturday|sunday) in \
 [A-Z|a-z|\'| ]+\??'),
                                   re.compile('[A-Z|a-z|\'| ]*weather (going to \
-be )?in [A-Z|a-z|\'| ]+ on (monday|tuesday|wednesday|thursday|friday|saturday\
+be )?(like )?in [A-Z|a-z|\'| ]+ on (monday|tuesday|wednesday|thursday|friday|saturday\
 |sunday)\??')],
         }
 
@@ -73,6 +73,8 @@ be )?in [A-Z|a-z|\'| ]+ on (monday|tuesday|wednesday|thursday|friday|saturday\
                             external_location = " ".join(splits[0:-1])
                         if "going to be" in external_location:
                             external_location = external_location.split(" going to be")[0]
+                        elif " like" in external_location:
+                            external_location = external_location.split(" like")[0]
                         return label, external_location
                     elif label == "external specific":
                         if command.find(" on ") < command.find(" in "):
