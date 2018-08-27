@@ -39,4 +39,6 @@ Marvin (originally called Andy, but now changed to Marvin) is an AI assistant in
 
   Example usage: "Marvin, what is Siri?", "Marvin, who is Benjamin Franklin?"
 
+========================  Demos ========================
 
+[Marvin Demo Videos on Youtube](https://www.youtube.com/watch?v=riym_AfFDsw&list=PLo8PMt7X0qlmuqZ8SmY9HOSenBIbG5-eZ&ab_channel=MarvinDemo)
