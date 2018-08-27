@@ -1,4 +1,3 @@
-import aiml
 import os
 import glob
 import yaml
@@ -38,7 +37,6 @@ class Andy:
             calendar: A Calendar object, executes and responds to Calendar
                 commands
             helper: A helper which chooses which module to send commands to
-            kernel: An AIML kernel which responds to some messages to Andy
             user_spoken: True if Andy should listen to commands through the
                 microphone, and False if the command line should be used
             andy_spoken: True if Andy should use text to speech, and False if
@@ -58,8 +56,6 @@ class Andy:
         self.sports = Sports()
         self.stocks = Stocks()
         self.helper = Andy_Helper()
-        self.kernel = aiml.Kernel()
-        self.load_aiml()
         self.user_spoken = user_spoken
         self.andy_spoken = andy_spoken
         self.sms_name = sms_name
@@ -72,12 +68,6 @@ class Andy:
         else:
             if default_music == "spotify":
                 self.current_music = self.spotify
-
-    def load_aiml(self):
-        """loads each file in the aiml/ folder into the AIML interpreter"""
-        for file in glob.glob('{}/aiml/*.xml'.format(
-                os.path.abspath(os.path.dirname(__name__)))):
-            self.kernel.learn(file)
 
     def text_input(self):
         user_input = input("> ")
