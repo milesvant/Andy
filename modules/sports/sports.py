@@ -5,7 +5,7 @@ from .sports_helper import SportsHelper
 
 
 class Sports:
-    """Class which allows Andy to retrieve sports scores.
+    """Class which allows Marvin to retrieve sports scores.
 
         Attributes:
             helper: A SportsHelper object which assists with the

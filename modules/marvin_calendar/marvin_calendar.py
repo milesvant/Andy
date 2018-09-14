@@ -8,7 +8,7 @@ from .calendar_helper import CalendarHelper
 
 
 class Calendar:
-    """Class which allows Andy to interact with the Google Calendar API.
+    """Class which allows Marvin to interact with the Google Calendar API.
 
         Attributes:
             helper: A Calendar_Helper object which assists with the

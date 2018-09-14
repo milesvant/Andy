@@ -26,9 +26,9 @@ import os
 import io
 
 
-class AndySpeechToText:
+class MarvinSpeechToText:
     """Class which records commands and uses Google's API to perform the
-            speech to text functionality for Andy.
+            speech to text functionality for Marvin.
 
         Methods in between is_silent and record_to_file are adapted from this
         Stack Overflow answer:
@@ -173,7 +173,7 @@ class AndySpeechToText:
         wf.writeframes(data)
         wf.close()
 
-    def record_for_andy(self):
+    def record_for_marvin(self):
         """Upon user input, records a command to the file <current time>.wav,
             then returns the filename"""
         now = datetime.datetime.utcnow()
@@ -214,7 +214,7 @@ class AndySpeechToText:
         if after_wake_word:
             filename = self.record_after_wake_word()
         else:
-            filename = self.record_for_andy()
+            filename = self.record_for_marvin()
         text = self.convert_to_text(filename)
         print(text)
         os.remove(filename)

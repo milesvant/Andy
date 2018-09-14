@@ -12,7 +12,7 @@ import re
 
 
 class Weather:
-    """Class which generates info and responses about the weather for Andy.
+    """Class which generates info and responses about the weather for Marvin.
 
        Attributes:
         _OWM: OWM object that this class wraps

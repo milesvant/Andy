@@ -1,8 +1,8 @@
 import re
 
 
-class Andy_Helper:
-    """A helper class which classifies commands into categories for Andy"""
+class Marvin_Helper:
+    """A helper class which classifies commands into categories for Marvin"""
 
     def __init__(self):
         self.command_keywords = {

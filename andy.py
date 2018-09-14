@@ -15,17 +15,17 @@ from twilio.base.exceptions import TwilioException
 from wikipedia.exceptions import WikipediaException
 from modules.spotify.spotify import Spotify
 from modules.weather.weather import Weather
-from modules.andy_calendar.andy_calendar import Calendar
+from modules.marvin_calendar.marvin_calendar import Calendar
 from modules.sms.sms import SMS
 from modules.wiki.wiki import Wiki
-from modules.speech_to_text.speech_to_text import AndySpeechToText
+from modules.speech_to_text.speech_to_text import MarvinSpeechToText
 from modules.sports.sports import Sports
 from modules.stocks.stocks import Stocks
-from andy_helper import Andy_Helper
+from marvin_helper import Marvin_Helper
 from time import sleep
 
 
-class Andy:
+class Marvin:
     """Creates an AI assistant which can respond to spoken or typed commands
         of numerous kinds.
 
@@ -37,17 +37,17 @@ class Andy:
             calendar: A Calendar object, executes and responds to Calendar
                 commands
             helper: A helper which chooses which module to send commands to
-            user_spoken: True if Andy should listen to commands through the
+            user_spoken: True if Marvin should listen to commands through the
                 microphone, and False if the command line should be used
-            andy_spoken: True if Andy should use text to speech, and False if
+            marvin_spoken: True if Marvin should use text to speech, and False if
                 print statements should be used
             current_music: If music is currently being played or used, then
                 current_music is equal to corresponding music module object in
-                Andy's attributes
+                Marvin's attributes
        """
 
     def __init__(self, sms_name, default_music=None,
-                 user_spoken=False, andy_spoken=False):
+                 user_spoken=False, marvin_spoken=False):
         self.spotify = Spotify()
         self.weather = Weather()
         self.calendar = Calendar()
@@ -55,13 +55,13 @@ class Andy:
         self.wiki = Wiki()
         self.sports = Sports()
         self.stocks = Stocks()
-        self.helper = Andy_Helper()
+        self.helper = Marvin_Helper()
         self.user_spoken = user_spoken
-        self.andy_spoken = andy_spoken
+        self.marvin_spoken = marvin_spoken
         self.sms_name = sms_name
         if self.user_spoken:
-            self.stt = AndySpeechToText()
-        if self.andy_spoken:
+            self.stt = MarvinSpeechToText()
+        if self.marvin_spoken:
             self.speech_engine = pyttsx3.init()
         if default_music is None:
             self.current_music = None
@@ -74,7 +74,7 @@ class Andy:
         return user_input
 
     def prompt(self):
-        """Prompts the user for input to Andy"""
+        """Prompts the user for input to Marvin"""
         if self.user_spoken:
             self.stt.detect_wake_word()
             print(">")
@@ -174,7 +174,7 @@ class Andy:
     def say(self, text):
         """Says given text, either through printing it or using
             speech-to-text."""
-        if self.andy_spoken:
+        if self.marvin_spoken:
             self.speech_engine.say(text)
             self.speech_engine.runAndWait()
             print(text)
@@ -182,7 +182,7 @@ class Andy:
             print(text)
 
     def loop(self):
-        """Generates a REPL for Andy"""
+        """Generates a REPL for Marvin"""
         while True:
             try:
                 self.prompt()

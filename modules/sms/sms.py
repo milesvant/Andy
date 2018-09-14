@@ -6,7 +6,7 @@ import yaml
 
 
 class SMS:
-    """Class that enables Andy to send text messages using the Twilio API.
+    """Class that enables Marvin to send text messages using the Twilio API.
 
        Attributes:
             client: Twilio Client object
@@ -20,7 +20,7 @@ class SMS:
 
     def __init__(self, my_name):
         self.client, self.twilio_number = self.authenticate()
-        self.sms_suffix = "Sent from Andy by: {}".format(my_name)
+        self.sms_suffix = "Sent from Marvin by: {}".format(my_name)
         self.helper = SMSHelper()
 
     def authenticate(self):

@@ -3,7 +3,7 @@ import wikipedia
 
 
 class Wiki:
-    """Class which allows Andy to look up queries on Wikipedia.
+    """Class which allows Marvin to look up queries on Wikipedia.
 
        Attributes:
             helper: a WikiHelper object which will perform the parsing
