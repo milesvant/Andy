@@ -18,19 +18,11 @@ click==6.7
 cssselect==1.0.3
 cycler==0.10.0
 defusedxml==0.5.0
-Django==2.0.2
-django-webpack-loader==0.6.0
-djangorestframework==3.7.7
 docker-pycreds==0.2.2
 dockerpty==0.4.1
 docopt==0.6.2
 docutils==0.14
 ExifRead==2.1.2
-Flask==0.12.2
-Flask-Login==0.4.1
-Flask-Migrate==2.1.1
-Flask-SQLAlchemy==2.3.2
-Flask-WTF==0.14.2
 gast==0.2.0
 gensim==3.4.0
 google-api-core==1.2.1
@@ -45,7 +37,6 @@ html5lib==0.9999999
 httplib2==0.11.3
 idna==2.6
 itsdangerous==0.24
-Jinja2==2.10
 jmespath==0.9.3
 jsonschema==2.6.0
 kiwisolver==1.0.1
@@ -184,7 +175,6 @@ uritemplate==3.0.0
 urllib3==1.22
 virtualenv==16.0.0
 websocket-client==0.47.0
-Werkzeug==0.14.1
 wikipedia==1.4.0
 WsgiDAV==2.3.0
 WTForms==2.1
