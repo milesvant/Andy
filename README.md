@@ -1,4 +1,4 @@
-# Andy
+# Marvin
 Marvin (originally called Andy, but now changed to Marvin) is an AI assistant in the vein of Siri & Alexa built using python. Using your voice or through a CLI, the user can issue commands to Marvin which will be interpreted and executed. These commands will be intelligently categorized and understood by Marvin, enabling a wide, dynamic variety of phrases to execute the same commands, rather than one fixed phrase per feature. When using your voice, Marvin will wait until it hears the wake word "Marvin", then make a blip sound signaling that it's listening for a command. When using the CLI, the user can simply type in a command and press enter.
 
 ========================  Features ========================
