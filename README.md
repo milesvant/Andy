@@ -3,38 +3,38 @@ Marvin (originally called Andy, but now changed to Marvin) is an AI assistant in
 
 ========================  Features ========================
 
-*Calendar -*
+**Calendar -**
   Marvin can interact with a user's Google Calendar, listing off events for today, tomorrow, and the week ahead.
 
   Example usage: "Marvin, what are my events today?", "Marvin, what's on my calendar next week?"
 
-*SMS -*
+**SMS -**
   Marvin can send text messages to a requested number (currently very limited due to my usage of only a trial Twilio account).
 
   Example usage: "Marvin, send a text message"
 
-*Sports -*
+**Sports -**
   Marvin can tell the user results of recent MLB games as well as team's current records.
 
   Example usage: "Marvin, what was the score of the Dodgers game yesterday?",
   "Marvin, what is the Yankees' record this year?"
 
-*Spotify -*
+**Spotify -**
   Marvin can control the user's spotify playback, pausing and resuming, skipping, selecting playlists, as well as searching and playing music based on user queries.
 
   Example usage: "Marvin, pause my music", "Marvin, what's the name of the current song?", "Marvin, play the Beatles"
 
-*Stocks -*
+**Stocks -**
   Marvin can tell the user the price of stocks, given their ticker symbols.
 
   Example usage: "Marvin, what is the price of AAPL today?"
 
-*Weather -*
+**Weather -**
   Marvin can tell the user the weather at the current or an external location, on the current or a future day.
 
   Example usage: "Marvin, what's the weather like today?", "Marvin, what's the weather going to be in Philadelphia tomorrow?"
 
-*Wikipedia -*
+**Wikipedia -**
   Marvin can look up queries on Wikipedia.
 
   Example usage: "Marvin, what is Siri?", "Marvin, who is Benjamin Franklin?"
